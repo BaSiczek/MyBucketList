@@ -32,7 +32,14 @@
                             <outlet property="delegate" destination="iLx-ec-jbt" id="e07-zy-t0t"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Bucket List" id="dar-c9-alM"/>
+                    <navigationItem key="navigationItem" title="Bucket List" id="dar-c9-alM">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="swP-PY-88I">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="addButtonPressed:" destination="iLx-ec-jbt" id="zQS-HJ-bdN"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="daj-eo-n8A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

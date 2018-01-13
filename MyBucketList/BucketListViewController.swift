@@ -11,7 +11,7 @@ import UIKit
 class BucketListViewController: UITableViewController {
 
     let placesArray = ["Apo Island", "Salem Express", "Jericoacoara"]
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -42,6 +42,10 @@ class BucketListViewController: UITableViewController {
 
         tableView.deselectRow(at: indexPath, animated: true)
 
+    }
+    //MARK - Add new Action
+    
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
     }
 }
 
