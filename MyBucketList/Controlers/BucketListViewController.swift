@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import CoreData
 
 class BucketListViewController: UITableViewController {
 
     var placesArray = [Place]()
-    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Places.plist")
-   
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //print(dataFilePath)
@@ -62,8 +64,9 @@ class BucketListViewController: UITableViewController {
         
         let action = UIAlertAction(title: "Add Place", style: .default) {(action) in
             
-            let newPlace = Place()
+            let newPlace = Place(context: self.context)
             newPlace.title = textField.text!
+            newPlace.visited = false
             self.placesArray.append(newPlace)
             
             self.savePlaces()
@@ -82,27 +85,25 @@ class BucketListViewController: UITableViewController {
     // MARK: Model manipulation methods
     
     func savePlaces(){
-        let encoder = PropertyListEncoder()
+
         do{
-            let data = try encoder.encode(placesArray)
-            try data.write(to: dataFilePath!)
+            try context.save()
         } catch {
-            print("Error encoding Places Array, \(error)")
+            print("Error saving context, \(error)")
             
         }
         
-        tableView.reloadData()
+        self.tableView.reloadData()
     }
     
     func loadPlaces(){
-        if let data = try? Data(contentsOf: dataFilePath!){
-            let decoder = PropertyListDecoder()
-            do{
-                placesArray = try decoder.decode([Place].self, from: data)
-            } catch {
-            print("Error decoding Places Array, \(error)")
-            }
+        let request : NSFetchRequest<Place> = Place.fetchRequest()
+        do {
+            placesArray = try context.fetch(request)
+        } catch  {
+            print("Error fetching data from context, \(error)")
         }
+        
         
     }
     
